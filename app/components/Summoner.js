@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { AppRegistry, Button, Text, TextInput, View } from 'react-native';
+import { AppRegistry, StyleSheet, Button, Text, TextInput, View } from 'react-native';
 import RecentMatches from './RecentMatches.js';
 
 export default class summoner extends Component{
@@ -37,26 +37,45 @@ export default class summoner extends Component{
 	}
 	render(){
 		return(
-			<View>
-				<Text>{this.state.text}</Text>
+			<View style={styles.container}>
+				<Text style={styles.label}>{this.state.text}</Text>
 				<TextInput 
+					style={styles.input}
 					placeholder="Summoner name"
 					value={this.state.text}
 					onChangeText={(text) => this.setState({text})}
 					 />
 				<Button
-				  onPress={() => this._handlePress() }
-				  title="Get info"
+					color="#841584"
+					onPress={() => this._handlePress() }
+					title="Get info"
 				/>
 				{ this.state.accountId != null &&
 					<View>
 						<Text>Account Id : {this.state.accountId}</Text>
-						<RecentMatches accountId={this.state.accountId} apikey={this.state.apikey} baseurl={this.state.baseurl} />
+						<RecentMatches accountid={this.state.accountId} apikey={this.state.apikey} baseurl={this.state.baseurl} />
 					</View>
 				}
 			</View>
 			);
 	}
 }
+
+const styles = StyleSheet.create({
+
+  input: {
+  	padding: 10,
+  	borderColor : 'grey',
+  	borderWidth: 1,
+  },
+  container: {
+  	margin:10
+  },
+  label:{
+  	fontWeight: 'bold' ,
+  	margin:10 
+  },
+
+});
 
 AppRegistry.registerComponent('summoner', () => summoner);
