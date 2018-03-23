@@ -7,6 +7,7 @@ export default class recentmatches extends Component{
 	constructor(props){
 		super(props);
 		this.state ={
+			accountid : props.accountid,
 			baseurl : props.baseurl,
 			url : props.baseurl + '/lol/match/v3/matchlists/by-account/',
 			champurl : props.baseurl + '/lol/static-data/v3/champions?locale=en_US&champListData=info&tags=image&tags=info&dataById=true',
@@ -28,7 +29,7 @@ export default class recentmatches extends Component{
     		//this.setState({
     		//	champions : responseJson.data[1]
     		//});
-    		alert(JSON.stringify(responseJson.data[1]));
+    		//alert(JSON.stringify(responseJson.data[1]));
 
 //    		return responseJson;
     	})
@@ -79,7 +80,7 @@ export default class recentmatches extends Component{
 		return(
 			<View style={styles.container}>
 				{ this.state.currentmatch != null ? (
-					<MatchDetail currentmatch={this.state.currentmatch} apikey={this.state.apikey} baseurl={this.state.baseurl} />
+					<MatchDetail accountid={this.state.accountid} currentmatch={this.state.currentmatch} apikey={this.state.apikey} baseurl={this.state.baseurl} />
 				) : (
 
 					<View style={styles.container}>

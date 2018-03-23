@@ -6,7 +6,7 @@ export default class lolJungle extends Component{
 	render(){
 		return(
 			<SafeAreaView>
-				<Summoner apikey='RGAPI-20de3735-ded6-4db5-afa6-515472a0ccb7' baseurl="https://oc1.api.riotgames.com" />
+				<Summoner apikey='RGAPI-63edf357-9a21-48b5-a683-fb52b98ab5c6' baseurl="https://oc1.api.riotgames.com" />
 	
 			</SafeAreaView>
 			);
