@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { AppRegistry, StyleSheet, Button, Text, TextInput, View } from 'react-native';
+import { AppRegistry, StyleSheet, Image, Button, Text, TextInput, View } from 'react-native';
 
 export default class matchdetail extends Component{
 	constructor(props){
@@ -24,7 +24,7 @@ export default class matchdetail extends Component{
     	let acc = this.state.accountid;
     	let pi = this.state.participantId;
 
-    	url = this.state.urlinfo + this.state.currentmatch + '?api_key=' + this.state.apikey;
+    	let url = this.state.urlinfo + this.state.currentmatch + '?api_key=' + this.state.apikey;
     	
 	 	fetch(url)
 	    .then((response) => response.json())
@@ -64,14 +64,17 @@ export default class matchdetail extends Component{
 
 	processFrames(responseJson){
 		let framesBuffer = '';
+		let pid = this.state.participantId;
 			for (var i=0; i<20; i++) {
-			  
-			  	framesBuffer += (responseJson.frames[i].timestamp/1000) + 's ' + responseJson.frames[i].participantFrames[this.state.participantId].jungleMinionsKilled + '\n';
-			  
+			  	
+			  //	framesBuffer += (responseJson.frames[i].timestamp/1000) + 's ' + responseJson.frames[i].participantFrames[pid].jungleMinionsKilled +  '\n';
+			 	framesBuffer += '[' + responseJson.frames[i].participantFrames[pid].position.x + ', ' + responseJson.frames[i].participantFrames[pid].position.y +'], ';
+			   
 			}
 		this.setState({
 			frames:  framesBuffer
 		});
+		//http://jsfiddle.net/ow4tsbne/271/
 				
 			
 	}
@@ -94,10 +97,14 @@ export default class matchdetail extends Component{
 	render(){
 		return(
 			<View>
-				<Text>	{this.props.currentmatch}</Text>
+				<Text> Match id :	{this.props.currentmatch}</Text>
 				<Text> id : {this.state.participantId} </Text>
-				<Text> frames : {this.state.frames} </Text>
-			</View>
+				<Text> CS : {this.state.frames} </Text>
+				<Image
+				style={{width: 350, height: 350}}
+          source={{uri: 'https://s3-us-west-1.amazonaws.com/riot-developer-portal/docs/map11.png'}}
+        />
+		</View>
 		);
 			
 	}
