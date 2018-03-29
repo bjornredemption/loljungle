@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { AppRegistry, StyleSheet, Image, Button, Text, TextInput, View } from 'react-native';
+import { AppRegistry, Animated,StyleSheet, Image, Button, Text, TextInput, View } from 'react-native';
 
 export default class matchdetail extends Component{
 	constructor(props){
@@ -100,15 +100,29 @@ export default class matchdetail extends Component{
 				<Text> Match id :	{this.props.currentmatch}</Text>
 				<Text> id : {this.state.participantId} </Text>
 				<Text> CS : {this.state.frames} </Text>
+				<View style={{position:'relative'}}>
 				<Image
-				style={{width: 350, height: 350}}
+				style={{width: 350, height: 350, position:'absolute'}}
           source={{uri: 'https://s3-us-west-1.amazonaws.com/riot-developer-portal/docs/map11.png'}}
-        />
+        		>
+    
+        		</Image>
+        		<View style={{borderRadius:5,width:12,height:12,backgroundColor:'red',top: 50, left: 50, position:'absolute'}}>.</View>
+        		</View>
 		</View>
 		);
 			
 	}
 }
 
+const styles = StyleSheet.create({
+
+  bar: {
+  	width:115,
+  	backgroundColor:'red',
+  	height:20
+  }
+
+});
 
 AppRegistry.registerComponent('matchdetail', () => matchdetail);
