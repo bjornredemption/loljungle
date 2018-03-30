@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { AppRegistry, Animated,StyleSheet, Image, Button, Text, TextInput, View } from 'react-native';
+import GameMap from './GameMap.js';
 
 export default class matchdetail extends Component{
 	constructor(props){
@@ -13,7 +14,7 @@ export default class matchdetail extends Component{
 			apikey : props.apikey,
 			currentmatch : props.currentmatch,
 			players : [],
-			frames: null
+			frames: []
 		};
 	}
 
@@ -31,7 +32,6 @@ export default class matchdetail extends Component{
     	.then((responseJson) => {
 
     		this.processRequest(responseJson, acc);
-    		//return responseJson;
 
     	})
     	.catch((error) => {
@@ -63,13 +63,17 @@ export default class matchdetail extends Component{
 	}
 
 	processFrames(responseJson){
-		let framesBuffer = '';
+		let framesBuffer = [];
 		let pid = this.state.participantId;
 			for (var i=0; i<20; i++) {
 			  	
 			  //	framesBuffer += (responseJson.frames[i].timestamp/1000) + 's ' + responseJson.frames[i].participantFrames[pid].jungleMinionsKilled +  '\n';
-			 	framesBuffer += '[' + responseJson.frames[i].participantFrames[pid].position.x + ', ' + responseJson.frames[i].participantFrames[pid].position.y +'], ';
-			   
+			 //	framesBuffer += '[' + responseJson.frames[i].participantFrames[pid].position.x + ', ' 
+			 //	+ responseJson.frames[i].participantFrames[pid].position.y +'], ';
+			   framesBuffer.push({
+			   	x:responseJson.frames[i].participantFrames[pid].position.x,
+			   	y:responseJson.frames[i].participantFrames[pid].position.y
+			   	});
 			}
 		this.setState({
 			frames:  framesBuffer
@@ -99,17 +103,12 @@ export default class matchdetail extends Component{
 			<View>
 				<Text> Match id :	{this.props.currentmatch}</Text>
 				<Text> id : {this.state.participantId} </Text>
-				<Text> CS : {this.state.frames} </Text>
-				<View style={{position:'relative'}}>
-				<Image
-				style={{width: 350, height: 350, position:'absolute'}}
-          source={{uri: 'https://s3-us-west-1.amazonaws.com/riot-developer-portal/docs/map11.png'}}
-        		>
-    
-        		</Image>
-        		<View style={{borderRadius:5,width:12,height:12,backgroundColor:'red',top: 50, left: 50, position:'absolute'}}>.</View>
-        		</View>
-		</View>
+				{ this.state.frames.length > 0 &&
+				<GameMap points={this.state.frames} />
+				
+				}
+				
+			</View>
 		);
 			
 	}
